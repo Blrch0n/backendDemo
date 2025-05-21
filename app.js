@@ -21,12 +21,20 @@ app.use(errorMiddleware);
 
 app.get("/", async (req, res) => {
   res.send("Welcome to the home page");
-
-  await connectDB();
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port : ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port : ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 export default app;
