@@ -16,6 +16,11 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
+    const rawUser = await User.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      data: rawUser,
+    });
 
     if (!user) {
       const error = new Error("User not found");
