@@ -6,10 +6,16 @@ const aj = arcjet({
   characteristics: ["ip.src"],
 
   rules: [
+    {
+      bots: {
+        allowlist: ["Postman"], // Allow Postman's user agent
+      },
+    },
     shield({ mode: "LIVE" }),
     detectBot({
       mode: "LIVE",
-      allow: ["CATEGORY:SEARCH_ENGINE"],
+      allow: ["CATEGORY:SEARCH_ENGINE", "Postman"],
+      blockMessage: "Bot access denied",
     }),
     tokenBucket({
       mode: "LIVE",
